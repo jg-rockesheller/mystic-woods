@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://1du6oewnrbo4"]
+
+[ext_resource type="Texture2D" uid="uid://b1wv47bt7058w" path="res://mystic_woods_assets/sprites/characters/player.png" id="1_45rta"]
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_45rta")
+offset = Vector2(-0.5, -15)
+hframes = 6
+vframes = 10
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
