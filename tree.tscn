@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtr13bjhg4t7g"]
+
+[ext_resource type="Texture2D" uid="uid://c1ioak2kjcxub" path="res://mystic_woods_assets/sprites/objects/objects.png" id="1_qadgu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hplmu"]
+size = Vector2(24, 13)
+
+[node name="Tree" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -4)
+texture = ExtResource("1_qadgu")
+offset = Vector2(-0.5, -27)
+region_enabled = true
+region_rect = Rect2(0, 145.924, 48.5377, 62.0764)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_hplmu")
