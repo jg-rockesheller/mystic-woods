@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://csukb5bqk6wu5"]
+[gd_scene load_steps=4 format=3 uid="uid://csukb5bqk6wu5"]
 
 [ext_resource type="PackedScene" uid="uid://1du6oewnrbo4" path="res://player.tscn" id="2_wfrjb"]
+[ext_resource type="PackedScene" uid="uid://d4gjydajersap" path="res://skeleton.tscn" id="3_7ne3s"]
 [ext_resource type="PackedScene" uid="uid://dtr13bjhg4t7g" path="res://tree.tscn" id="3_acedn"]
 
 [node name="World" type="Node2D"]
@@ -13,3 +14,6 @@ position = Vector2(65, -53)
 
 [node name="Tree2" parent="." instance=ExtResource("3_acedn")]
 position = Vector2(47, 66)
+
+[node name="Skeleton" parent="." instance=ExtResource("3_7ne3s")]
+position = Vector2(-187, 83)
