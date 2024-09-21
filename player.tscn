@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://1du6oewnrbo4"]
+[gd_scene load_steps=11 format=3 uid="uid://1du6oewnrbo4"]
 
 [ext_resource type="Texture2D" uid="uid://b1wv47bt7058w" path="res://mystic_woods_assets/sprites/characters/player.png" id="1_45rta"]
 [ext_resource type="Script" path="res://player.gd" id="1_cgjdc"]
@@ -33,6 +33,30 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_bc3yi"]
 resource_name = "Running"
@@ -51,8 +75,50 @@ tracks/0/keys = {
 "values": [24, 29]
 }
 
+[sub_resource type="Animation" id="Animation_0dtc3"]
+resource_name = "Attack"
+length = 0.8
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [42, 45]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.07, 0.2, 0.21),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.39, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.241156, 0.241156, 0.241156, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_40l46"]
 _data = {
+"Attack": SubResource("Animation_0dtc3"),
 "Idle": SubResource("Animation_qlr8c"),
 "RESET": SubResource("Animation_dtruf"),
 "Running": SubResource("Animation_bc3yi")
@@ -60,6 +126,12 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwllh"]
 size = Vector2(8, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v0w6e"]
+size = Vector2(27, 21)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xhwrn"]
+size = Vector2(8, 14)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -87,3 +159,20 @@ drag_vertical_enabled = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_gwllh")
+
+[node name="Hitbox" type="Area2D" parent="." groups=["Player Hitbox"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(9.5, -1.5)
+shape = SubResource("RectangleShape2D_v0w6e")
+disabled = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_xhwrn")
+
+[node name="InvincibilityTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [global_group]
 
 "Transparent When Behind"="Turns the parent transparent when the player is behind this area."
+"Enemy Hitbox"=""
+"Player Hitbox"=""
 
 [input]
 
