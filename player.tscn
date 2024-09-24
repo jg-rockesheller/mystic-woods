@@ -1,7 +1,48 @@
-[gd_scene load_steps=11 format=3 uid="uid://1du6oewnrbo4"]
+[gd_scene load_steps=12 format=3 uid="uid://1du6oewnrbo4"]
 
 [ext_resource type="Texture2D" uid="uid://b1wv47bt7058w" path="res://mystic_woods_assets/sprites/characters/player.png" id="1_45rta"]
 [ext_resource type="Script" path="res://player.gd" id="1_cgjdc"]
+
+[sub_resource type="Animation" id="Animation_0dtc3"]
+resource_name = "Attack"
+length = 0.8
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [42, 45]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.07, 0.2, 0.21),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.39, 0.4, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.540991, 0.54099, 0.54099, 1), Color(0.540991, 0.54099, 0.54099, 1), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_qlr8c"]
 resource_name = "Idle"
@@ -75,50 +116,27 @@ tracks/0/keys = {
 "values": [24, 29]
 }
 
-[sub_resource type="Animation" id="Animation_0dtc3"]
-resource_name = "Attack"
-length = 0.8
+[sub_resource type="Animation" id="Animation_2j2qi"]
+resource_name = "Hurt"
+length = 0.4
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Sprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [42, 45]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.07, 0.2, 0.21),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [true, false, false, true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.39, 0.4, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.241156, 0.241156, 0.241156, 1), Color(1, 1, 1, 1)]
+"values": [Color(1, 1, 1, 1), Color(1, 0.102468, 0.307977, 1), Color(1, 1, 1, 1), Color(1, 0.101961, 0.309804, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_40l46"]
 _data = {
 "Attack": SubResource("Animation_0dtc3"),
+"Hurt": SubResource("Animation_2j2qi"),
 "Idle": SubResource("Animation_qlr8c"),
 "RESET": SubResource("Animation_dtruf"),
 "Running": SubResource("Animation_bc3yi")
@@ -176,3 +194,4 @@ shape = SubResource("RectangleShape2D_xhwrn")
 [node name="InvincibilityTimer" type="Timer" parent="."]
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

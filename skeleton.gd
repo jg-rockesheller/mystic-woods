@@ -21,6 +21,9 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 
 
+func _ready() -> void: $Hitbox/CollisionShape2D.disabled = true
+
+
 func choose_action() -> void:
 	$Label.text = States.keys()[state]
 	if state not in [States.STUN, States.HURT, States.DEAD] and ($AnimationPlayer.current_animation in ["Attack", "Hurt", "Dead"] or stunned): return
@@ -60,6 +63,7 @@ func choose_action() -> void:
 				player.dashes += 1
 				gave_reward = true
 			$Hurtbox/CollisionShape2D.disabled = true
+			$Hitbox/CollisionShape2D.disabled = true
 			velocity *= 0
 			$AnimationPlayer.play("Dead")
 			await $AnimationPlayer.animation_finished
