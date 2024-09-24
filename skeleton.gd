@@ -71,8 +71,8 @@ func choose_action() -> void:
 
 		States.STUN:
 			stunned = true
-			$AnimationPlayer.play("Stunned")
-			await $AnimationPlayer.animation_finished
+			$Sprite2D.modulate = "#b2b2b2"
+			$StunnedTimer.start()
 
 	if state != States.PATROL: stop_patrol()
 
@@ -100,12 +100,14 @@ func _on_chase_area_body_exited(_body: Node2D) -> void:
 
 # alert functions
 func patrol() -> void:
-	$ChaseArea/CollisionShape2D.position = Vector2(82.5, -10)
+	$ChaseArea/CollisionShape2D.position = Vector2(40, -10)
+	$LOSEnabler/CollisionShape2D.disabled = true
 	# TODO: go on patrols using path2d
 
 
 func stop_patrol() -> void:
 	$ChaseArea/CollisionShape2D.position = Vector2(0, 0)
+	$LOSEnabler/CollisionShape2D.disabled = false
 	# TODO: stop following path2d
 
 
@@ -122,3 +124,15 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if state in [States.PATROL, States.STUN]: dmg = 4
 	health -= dmg
 	state = States.HURT
+
+
+
+func _on_line_of_sight_area_entered(area: Area2D) -> void:
+	if not area.is_in_group("Enable LOS"): return
+	if not player: player = area.get_tree().get_root().get_node("World/Player")
+	state = States.CHASE
+
+
+func _on_stunned_timer_timeout() -> void:
+	stunned = false
+	$Sprite2D.modulate = "#ffffff"
