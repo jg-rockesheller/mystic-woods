@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://1du6oewnrbo4"]
+[gd_scene load_steps=13 format=3 uid="uid://1du6oewnrbo4"]
 
 [ext_resource type="Texture2D" uid="uid://b1wv47bt7058w" path="res://mystic_woods_assets/sprites/characters/player.png" id="1_45rta"]
 [ext_resource type="Script" path="res://player.gd" id="1_cgjdc"]
@@ -151,6 +151,8 @@ size = Vector2(27, 21)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xhwrn"]
 size = Vector2(8, 14)
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_n443t"]
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 motion_mode = 1
@@ -190,6 +192,46 @@ disabled = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_xhwrn")
+
+[node name="HealthDashBoxes" type="Node2D" parent="."]
+
+[node name="HealthBar" type="Node2D" parent="HealthDashBoxes"]
+position = Vector2(0, -19)
+
+[node name="Current" type="Sprite2D" parent="HealthDashBoxes/HealthBar"]
+self_modulate = Color(1, 0.164706, 0.152941, 1)
+z_index = 1
+position = Vector2(-7.5, -0.25)
+scale = Vector2(15, 1.5)
+texture = SubResource("CanvasTexture_n443t")
+centered = false
+
+[node name="Background" type="Sprite2D" parent="HealthDashBoxes/HealthBar"]
+modulate = Color(0.623529, 0.105882, 0.145098, 1)
+self_modulate = Color(0.623529, 0.105882, 0.145098, 1)
+position = Vector2(-7.5, -0.25)
+scale = Vector2(15, 1.5)
+texture = SubResource("CanvasTexture_n443t")
+centered = false
+
+[node name="DashBar" type="Node2D" parent="HealthDashBoxes"]
+position = Vector2(0, -19)
+
+[node name="Current" type="Sprite2D" parent="HealthDashBoxes/DashBar"]
+modulate = Color(0, 0.780392, 0.827451, 1)
+z_index = 1
+position = Vector2(-7.5, -2.25)
+scale = Vector2(15, 1.5)
+texture = SubResource("CanvasTexture_n443t")
+centered = false
+
+[node name="Background" type="Sprite2D" parent="HealthDashBoxes/DashBar"]
+modulate = Color(0.169807, 0.272124, 0.598023, 1)
+self_modulate = Color(0.168627, 0.270588, 0.596078, 1)
+position = Vector2(-7.5, -2.25)
+scale = Vector2(15, 1.5)
+texture = SubResource("CanvasTexture_n443t")
+centered = false
 
 [node name="InvincibilityTimer" type="Timer" parent="."]
 

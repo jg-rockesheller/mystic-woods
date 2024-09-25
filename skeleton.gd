@@ -78,7 +78,8 @@ func choose_action() -> void:
 
 
 # player enters/exits attack area
-func _on_attack_area_body_entered(_body: Node2D) -> void:
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	player = body
 	state = States.ATTACK
 
 

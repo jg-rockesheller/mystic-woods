@@ -4,14 +4,16 @@ class_name Player
 
 @export var health: float = 3
 @export var invincible: bool = false
-@export var dead: bool = false
 @export var run_speed: int = 75
 @export var afterimage_scene: PackedScene = preload("res://afterimage.tscn")
 @export var dashes: float = 3
 
 
 func _physics_process(delta: float) -> void:
-	if health <= 0: dead = true
+	if health <= 0:
+		var spawned_afterimage = afterimage_scene.instantiate()
+		get_tree().root.add_child(spawned_afterimage)
+
 
 	if $AnimationPlayer.current_animation == "Attack": return
 	move_and_slide()
@@ -23,6 +25,10 @@ func _physics_process(delta: float) -> void:
 	else: dashes += 0.075 * delta
 	if health >= 3: health = 3
 	else: health += 0.025 * delta
+
+
+	$HealthDashBoxes/DashBar/Current.scale.x = 5 * dashes
+	$HealthDashBoxes/HealthBar/Current.scale.x = 5 * health
 
 
 	var dir = Input.get_vector("Move Left", "Move Right", "Move Up", "Move Down")
